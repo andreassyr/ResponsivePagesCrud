@@ -1,0 +1,1 @@
+A demo crud application for managing pages in a CMS
