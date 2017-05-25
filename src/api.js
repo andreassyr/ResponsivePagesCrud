@@ -22,15 +22,7 @@ export function getSinglePage(pageId)
         dataType: 'json'
     });
 }
-/**
- @typedef PageDetails
- @type {object}
- @property {number} id - an ID.
- @property {string} title - the page title.
- @property {string} description - a page description.
- @property {number} type - one of three numbers Menu(0),Events(1),Content(2).
- @property {date} publishedOn - when the page was first created.
- /
+
  
  /**
  * 
