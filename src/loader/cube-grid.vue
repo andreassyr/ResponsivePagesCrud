@@ -1,6 +1,7 @@
 <style>
     .loader-cube-grid{
         transform: rotate(45deg);
+        margin-top: 10%;
     }
     
     .loader-cube-grid .loader-cube {

@@ -7,8 +7,23 @@
     .loader
     {
         margin:0px auto;
+        margin-top:20%;
+        transform: translateY(-50%);
+        animation: 0.25s ease 0s normal forwards 1 fadein;
     }
-    
+
+    @keyframes fadein{
+        0% { opacity:0; }
+        66% { opacity:0; }
+        100% { opacity:1; }
+    }
+
+    @-webkit-keyframes fadein{
+        0% { opacity:0; }
+        66% { opacity:0; }
+        100% { opacity:1; }
+    }
+
     .loader.small,
     .loader .small
     {

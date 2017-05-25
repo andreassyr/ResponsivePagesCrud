@@ -14,8 +14,9 @@
         <div class="row">
             <div class="col-md-6">
                 <h2>Available pages</h2>
-            </div>
-            <div class="col-md-6">
+                <button class="btn btn-success">New page</button>
+            </div> 
+            <div class="col-md-4">
                 <input type="text" class="search form-control" placeholder="search" v-model="search"/>
             </div>
         </div>
