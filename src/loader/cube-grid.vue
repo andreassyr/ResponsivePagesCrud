@@ -1,7 +1,21 @@
 <style>
     .loader-cube-grid{
         transform: rotate(45deg);
-        margin-top: 10%;
+    }
+    
+    .loader-cube-grid.small
+    {
+        margin-top:22px;
+    }
+    
+    .loader-cube-grid.medium
+    {
+        margin-top:42px;
+    }
+    
+    .loader-cube-grid.large
+    {
+        margin-top:62px;
     }
     
     .loader-cube-grid .loader-cube {

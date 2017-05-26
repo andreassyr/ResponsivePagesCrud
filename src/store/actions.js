@@ -2,7 +2,7 @@ import * as Api from '../api.js';
 
 /**
  * 
- * @param {type} dispatch
+ * @param {function} commit
  * @param {type} state
  * @returns {jqXhr}
  */
@@ -10,8 +10,22 @@ export function fetchPagesList( {commit, dispatch, state}){
     return Api.getPagesList().then((data, textStatus, jqXhr) => {
         commit('setPages', data);
     }, (jqXhr, error) => {
-        
+
     });
+}
+
+/**
+ * @param {number} pageId
+ * @param {function} commit
+ * @param {object} state
+ * @returns {undefined}
+ */
+export function deletePage( {commit, state}, pageId){
+    return Api.deletePage(pageId).then((data, textStatus, jqXhr) => {
+        commit('deletePage', data);
+    }, (jqXhr, error) => {
+
+    })
 }
 
 /**

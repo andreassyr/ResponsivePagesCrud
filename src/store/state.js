@@ -9,6 +9,12 @@ const mutations = {
     setPages(state, pages)
     {
         state.pages = pages;
+    },
+    deletePage(state, page)
+    {
+        state.pages = state.pages.filter(function(storedPage){
+            return page.id !== storedPage.id;
+        });
     }
 }
 
