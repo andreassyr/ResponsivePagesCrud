@@ -23,20 +23,20 @@ export function getSinglePage(pageId)
     });
 }
 
- 
- /**
+
+/**
  * 
- * @param {number} pageId
  * @param {PageDetails} pageDetails
  * @returns {jqXHR}
  */
-export function updatePage(pageId, pageDetails)
+export function updatePage(pageDetails)
 {
     return $.ajax({
-        url: '/api/ResponsivePages/' + {pageId},
+        url: '/api/ResponsivePages/' + pageDetails.id,
+        contentType: "application/json; charset=utf-8",
         method: 'PUT',
         dataType: 'json',
-        data: pageDetails
+        data: JSON.stringify(pageDetails)
     });
 }
 
@@ -50,8 +50,9 @@ export function createPage(pageDetails)
     return $.ajax({
         url: '/api/ResponsivePages',
         method: 'POST',
+        contentType: "application/json; charset=utf-8",
         dataType: 'json',
-        data: pageDetails
+        data: JSON.stringify(pageDetails)
     });
 }
 

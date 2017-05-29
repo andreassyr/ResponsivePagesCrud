@@ -1,5 +1,6 @@
 import * as Api from '../api.js';
-
+import PageEventTypes from '../commons/page-event-types.js';
+import moment from 'moment';
 /**
  * 
  * @param {function} commit
@@ -7,13 +8,23 @@ import * as Api from '../api.js';
  * @returns {jqXhr}
  */
 export function fetchPagesList( {commit, dispatch, state}){
-    return Api.getPagesList().then((data, textStatus, jqXhr) => {
+    var $def = $.Deferred();
+
+    Api.getPagesList().then((data, textStatus, jqXhr) => {
+
+        data = data.map(function (page) {
+            page.publishedOn = moment.utc(page.publishedOn);
+            return page;
+        });
+
         commit('setPages', data);
+        $def.resolve();
     }, (jqXhr, error) => {
-
+        $def.reject();
     });
-}
 
+    return $def.promise();
+}
 /**
  * @param {number} pageId
  * @param {function} commit
@@ -21,11 +32,28 @@ export function fetchPagesList( {commit, dispatch, state}){
  * @returns {undefined}
  */
 export function deletePage( {commit, state}, pageId){
-    return Api.deletePage(pageId).then((data, textStatus, jqXhr) => {
+    var $def = $.Deferred();
+    var pageEvent = {
+        type: PageEventTypes.deleted,
+        success: true,
+        message: ''
+    };
+
+    Api.deletePage(pageId).then((data, textStatus, jqXhr) => {
+
         commit('deletePage', data);
+        pageEvent.message = 'Page deleted successfully';
+        $def.resolve(pageEvent);
     }, (jqXhr, error) => {
 
-    })
+        pageEvent.message = 'Page could not be deleted please try again later';
+        pageEvent.success = false;
+        $def.reject(pageEvent);
+    }).always(() => {
+        commit('addPageEvent', pageEvent);
+    });
+
+    return $def.promise();
 }
 
 /**
@@ -38,6 +66,53 @@ export function deletePage( {commit, state}, pageId){
  @property {date} publishedOn - when the page was first created.
  @param {PageDetails} pageDetails
  */
-export function createNewPage( {dispatch, state}, pageDetails){
+export function createNewPage( {commit, state}, pageDetails){
+    var $def = $.Deferred();
+    var pageEvent = {
+        type: PageEventTypes.created,
+        success: true,
+        message: ''
+    };
 
+    Api.createPage(pageDetails).then((data, textStatus, jqXhr) => {
+        commit('addPage', data);
+        pageEvent.message = 'Page created successfully';
+        $def.resolve(pageEvent);
+    }, (jqXhr, error) => {
+        pageEvent.message = 'Could not create page please try again later';
+        pageEvent.success = false;
+        $def.reject(pageEvent);
+    }).always(() => {
+        commit('addPageEvent', pageEvent);
+    });
+
+    return $def.promise();
 }
+
+export function updatePage( {commit, state}, pageDetails){
+    var $def = $.Deferred();
+    var pageEvent = {
+        type: PageEventTypes.edited,
+        success: true,
+        message: ''
+    };
+
+    Api.updatePage(pageDetails).then(() => {
+        commit('editPage', data);
+        pageEvent.message = 'Page updated!';
+        $def.resolve(pageEvent);
+    }, () => {
+        pageEvent.message = 'Could not update page!';
+        pageEvent.success = false;
+        $def.reject(pageEvent);
+    }).always(() => {
+        commit('addPageEvent', pageEvent);
+    });
+
+    return $def.promise();
+}
+
+export function clearPageEvents( {commit, state})
+        {
+            commit('clearPageEvents');
+        }

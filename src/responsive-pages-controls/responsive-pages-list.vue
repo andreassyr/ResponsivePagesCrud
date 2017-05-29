@@ -4,6 +4,11 @@
         min-height: 100%;
     }
 
+    .pages-list .afix
+    {
+        z-index: 9999;
+    }
+
     .pages-list .search
     {
         margin-top: 15px;
@@ -26,20 +31,13 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <div class="alert alert-success " role="alert">...</div>
+                <alert ref="alert"></alert>
             </div>
         </div>
-        <template v-if="!loaded">
+        <template v-if="loading">
             <div class="row">
                 <div class="col-md-12">
                     <loader></loader>
-                </div>
-            </div>
-        </template>
-        <template v-else-if="error">
-            <div class="row">
-                <div class="col-md-12">
-                    <p class="lead">Error occurred please try again!</p>
                 </div>
             </div>
         </template>
@@ -58,34 +56,40 @@
                            v-on:delete="showDeleteConfirmation"></page-tile>
             </div>
         </template>
-        <page-delete-confirmation ref="deleteConfirmation"></page-delete-confirmation>
+        <page-delete-confirmation ref="deleteConfirmation"
+                                  @success="onDeleteSuccess" 
+                                  @error="onDeleteError"></page-delete-confirmation>
     </div>
 </template>
 <script>
     import {mapActions, mapGetters} from 'vuex';
     import loader from '../loader/loader.vue';
+    import Alert from '../commons/alert.vue';
+    import AlertTypes from '../commons/alert-types.js';
     import PageTile from './page-tile.vue';
     import PageDeleteConfirmation from './page-delete-confirmation.vue';
 
     export default{
         components: {
             loader,
+            'alert': Alert,
             'page-tile': PageTile,
             'page-delete-confirmation': PageDeleteConfirmation
         },
         data() {
             return {
-                loaded: false,
+                loading: false,
                 error: false,
                 search: ''
             }
         },
-        created()
+        mounted()
         {
+            this.loading = true;
             this.fetchPagesList().then(() => {
-                this.loaded = true;
+                this.loading = false;
             }, () => {
-                this.loaded = true;
+                this.loading = false;
                 this.error = true;
             });
         },
@@ -112,6 +116,14 @@
             showDeleteConfirmation(page)
             {
                 this.$refs.deleteConfirmation.show(page);
+            },
+            onDeleteSuccess(page)
+            {
+                this.$refs.alert.update();
+            },
+            onDeleteError(page)
+            {
+                this.$refs.alert.update();
             }
         }
     }

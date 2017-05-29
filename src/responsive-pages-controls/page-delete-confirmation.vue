@@ -3,14 +3,16 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Delete page?</h4>
+                    <h4 v-if="!loading" class="modal-title">Delete page?</h4>
+                    <h4 v-else class="modal-title">Deleting page</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to delete the page <strong>{{page.title}}</strong> ?</p>
+                    <p v-if="!loading">Are you sure you want to delete the page <strong>{{page.title}}</strong> ?</p>
+                    <loader v-else size="small" type="spinner"></loader>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" @click="handlePageDelete">
+                    <button type="button" class="btn btn-default" :disabled="loading" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" :disabled="loading" @click="handlePageDelete">
                         <span class="glyphicon glyphicon-trash"></span> Delete
                     </button>
                 </div>
@@ -20,8 +22,11 @@
 </template>
 <script>
     import {mapActions} from 'vuex';
-
+    import loader from '../loader/loader.vue';
     export default{
+        components: {
+            loader
+        },
         data() {
             return {
                 page: {},
@@ -32,10 +37,13 @@
             ...mapActions(['deletePage']),
             handlePageDelete()
             {
+                this.loading = true;
                 this.deletePage(this.page.id).then((page) => {
-                    this.$emit('page-delete-success', page);
+                    this.$emit('success', page);
                 }, () => {
-                    this.$emit('page-delete-error', this.page);
+                    this.$emit('error', this.page);
+                }).done(() => {
+                    this.hide();
                 });
             },
             show(page)
@@ -48,6 +56,7 @@
             },
             hide()
             {
+                this.loading = false;
                 $('.page-delete-confirmation').modal('hide');
             }
         }

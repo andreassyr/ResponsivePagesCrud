@@ -47,9 +47,13 @@
         <div class="wrapper">
             <div class="header">
                 <div class="row">
+                    <div class="col-xs-12">
+                        <h4>{{page.title}}</h4>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-xs-7">
-                        <h5>{{page.title}}</h5>
-                        <small><span class="glyphicon glyphicon-calendar"></span> {{publishedOn}}</small>
+                        <span class="glyphicon glyphicon-calendar"></span> {{publishedOn}}</small>
                     </div>
                     <div class="col-xs-5">
                         <span class="pull-right">
@@ -99,9 +103,8 @@
             }
         },
         computed: {
-
             publishedOn() {
-                var publishDate = moment.utc(this.page.publishedOn).local().format('HH:mm DD-MM-YYYY');
+                var publishDate =this.page.publishedOn.local().format('HH:mm DD-MM-YYYY');
                 return publishDate;
             }
         }
