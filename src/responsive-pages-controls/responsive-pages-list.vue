@@ -9,24 +9,25 @@
         z-index: 9999;
     }
 
-    .pages-list .search
+    .pages-list .search,
+    .pages-list .btn-create-new
     {
-        margin-top: 15px;
+        margin-top: 20px;
         margin-bottom: 15px;
     }
+    
 </style>
 <template>
-    <div class="pages-list container">
+    <div class="pages-list">
         <div class="row">
-            <div class="col-md-12">
-                <h2>Available pages 
-                    <router-link to="/create-page" tag="button" class="btn btn-success pull-right">New page</router-link>
-                </h2>
+            <div class="col-md-8">
+                <h2>Available pages</h2>
             </div> 
-        </div>
-        <div class="row">
-            <div class="col-xs-6 col-md-4">
+            <div class="col-xs-6 col-md-2">
                 <input type="text" class="search form-control" placeholder="search" v-model="search"/>
+            </div>
+            <div class="col-xs-6 col-md-2">
+                <router-link to="/create-page" tag="button" class="btn btn-primary btn-block pull-right btn-create-new">new page</router-link>
             </div>
         </div>
         <div class="row">

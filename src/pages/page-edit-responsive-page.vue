@@ -23,7 +23,7 @@
         },
         data() {
             return{
-                loading: false,
+                loading: true,
                 page: {}
             }
         },
@@ -31,7 +31,7 @@
             ...mapGetters(['getPageById', 'getPages'])
         },
         methods: {
-            ...mapActions(['fetchPagesList']),
+            ...mapActions(['getPage','updatePage']),
             navigateToPagesList()
             {
                 this.$router.push({path: '/'})
@@ -65,20 +65,14 @@
         },
         mounted()
         {
-            if (this.getPages.length === 0)
-            {
-                this.loading = true;
-                this.fetchPagesList().then(() => {
-                    this.page = this.getPageById(this.$route.params.id);
-                }, () => {
+            this.getPage(this.$route.params.id).then((page) => {
+                page.publishedOn.local();
+                this.page = page;
+            }, () => {
 
-                }).always(() => {
-                    this.loading = false;
-                });
-            } else
-            {
-                this.page = this.getPageById(this.$route.params.id);
-            }
+            }).always(() => {
+                this.loading = false;
+            });
         }
     }
 </script>

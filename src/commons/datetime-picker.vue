@@ -38,6 +38,10 @@
             }, (start, end, label) => {
                 this.$emit('input', start);
             });
+        },
+        beforeDestroy()
+        {
+            $(this.$el).data('daterangepicker').remove();
         }
     }
 

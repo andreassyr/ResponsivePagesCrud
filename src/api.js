@@ -35,7 +35,6 @@ export function updatePage(pageDetails)
         url: '/api/ResponsivePages/' + pageDetails.id,
         contentType: "application/json; charset=utf-8",
         method: 'PUT',
-        dataType: 'json',
         data: JSON.stringify(pageDetails)
     });
 }

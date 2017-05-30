@@ -97,11 +97,12 @@ export function updatePage( {commit, state}, pageDetails){
         message: ''
     };
 
-    Api.updatePage(pageDetails).then(() => {
-        commit('editPage', data);
+    Api.updatePage(pageDetails).then((data, textStatus, jqXhr) => {
+        console.log('update success');
+        commit('editPage', pageDetails);
         pageEvent.message = 'Page updated!';
         $def.resolve(pageEvent);
-    }, () => {
+    }, (jqXhr, error) => {
         pageEvent.message = 'Could not update page!';
         pageEvent.success = false;
         $def.reject(pageEvent);
@@ -112,7 +113,19 @@ export function updatePage( {commit, state}, pageDetails){
     return $def.promise();
 }
 
-export function clearPageEvents( {commit, state})
-        {
-            commit('clearPageEvents');
-        }
+export function getPage( {commit, state}, pageId){
+    var $def = $.Deferred();
+
+    Api.getSinglePage(pageId).then((page, textStatus, jqXhr) => {
+        page.publishedOn = moment.utc(page.publishedOn);
+        $def.resolve(page);
+    }, () => {
+        $def.reject();
+    });
+
+    return $def.promise();
+}
+
+export function clearPageEvents( {commit, state}){
+    commit('clearPageEvents');
+}

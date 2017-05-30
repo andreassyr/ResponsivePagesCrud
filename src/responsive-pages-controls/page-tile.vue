@@ -1,8 +1,40 @@
 <style>
     .page-tile
     {
+        cursor: pointer;
         padding-top:15px;
         padding-bottom:15px;
+
+    }
+
+    .page-tile:hover .wrapper
+    {
+        -webkit-box-shadow: 0px 1px 30px 0px rgba(207,207,207,1);
+        -moz-box-shadow: 0px 1px 30px 0px rgba(207,207,207,1);
+        box-shadow: 0px 1px 30px 0px rgba(207,207,207,1);
+    }
+
+    .page-tile .btn-link
+    {
+        webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -ms-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;	
+    }
+
+    .page-tile .btn-link:hover
+    {
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .page-tile .truncate
+    {
+        width:100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 
     }
 
@@ -24,10 +56,10 @@
 
     .page-tile .header
     {
-        margin-bottom: 10px;
+        margin-bottom: 25px;
     }
 
-    .page-tile .header h5
+    .page-tile .header h4
     {
         margin: 0px;
     }
@@ -38,49 +70,46 @@
 
     .page-tile .row.footer > div:first-child
     {
-        border-right: 1px #eee solid;
+        border-right: 2px #ddd solid;
     }
 
 </style>
 <template>
-    <div class="page-tile col-xs-12 col-sm-6 col-md-4">
+    <div class="page-tile col-xs-12 col-sm-6 col-md-6">
         <div class="wrapper">
             <div class="header">
                 <div class="row">
                     <div class="col-xs-12">
-                        <h4>{{page.title}}</h4>
+                        <h4 class="truncate">{{page.title}}</h4>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-7">
-                        <span class="glyphicon glyphicon-calendar"></span> {{publishedOn}}</small>
+                    <div class="col-xs-12">
+                        {{publishedOn}}
                     </div>
-                    <div class="col-xs-5">
-                        <span class="pull-right">
-                            <page-active-label :is-active="page.isActive"></page-active-label>
-                            <page-type-label :type="page.type"></page-type-label>
-                        </span>
+                    <div class="col-xs-12 labels">
+                        <page-type-label :type="page.type"></page-type-label>
+                        <page-active-label :is-active="page.isActive"></page-active-label>
                     </div>
+
                 </div>
             </div>
             <div class="content">
-                <p>{{page.description}}</p>
+                <p class="truncate">{{page.description}}</p>
             </div>
             <hr/>
             <div class="row footer text-center">
                 <div class="col-xs-6">
                     <button class="btn btn-link" @click="deleteClicked">
-                        <span class="glyphicon glyphicon-trash"></span> Delete
+                        delete
                     </button>
                 </div>
                 <div class="col-xs-6">
                     <router-link :to="{path:'edit-page/'+page.id}" tag="button" class="btn btn-link">
-                        <span class="glyphicon glyphicon-edit"></span> Edit
-                    </router-link>
-                </div>
+                        edit
+                </router-link>
             </div>
         </div>
     </div>
+</div>
 </template>
 <script>
     import moment from 'moment';
@@ -104,7 +133,7 @@
         },
         computed: {
             publishedOn() {
-                var publishDate =this.page.publishedOn.local().format('HH:mm DD-MM-YYYY');
+                var publishDate = this.page.publishedOn.local().format('HH:mm DD-MM-YYYY');
                 return publishDate;
             }
         }

@@ -35,12 +35,12 @@ const mutations = {
     },
     editPage(state, page)
     {
-        state.pages = state.pages.map(function(storedPage){
-            if(page.id === storedPage.id)
+        state.pages = state.pages.map(function (storedPage) {
+            if (page.id === storedPage.id)
             {
-                storedPage=page;
+                storedPage = page;
             }
-            
+
             return storedPage;
         });
     },
