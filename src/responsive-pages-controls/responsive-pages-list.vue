@@ -4,12 +4,18 @@
         min-height: 100%;
     }
 
-    .pages-list .tiles-move {
-        transition: all 1s;
+    .pages-list .page-tile {
+        transition: opacity 1s;
     }
-    
-    .pages-list .tiles-move-enter,
-    .pages-list .tiles-move-leave-to
+
+    .pages-list .tiles-enter-to,
+    .pages-list .tiles-leave
+    {
+        opacity: 1;
+    }
+
+    .pages-list .tiles-enter,
+    .pages-list .tiles-leave-to
     {
         opacity: 0;
     }
@@ -32,7 +38,7 @@
                 <input type="text" class="search form-control" placeholder="search" v-model="search"/>
             </div>
             <div class="col-xs-6 col-md-2">
-                <router-link to="/create-page" tag="button" class="btn btn-primary btn-block pull-right btn-create-new">new page</router-link>
+                <router-link to="/create-page" tag="button" class="btn btn-info btn-block pull-right btn-create-new">new page</router-link>
             </div>
         </div>
         <div class="row">
@@ -55,7 +61,7 @@
             </div>
         </template>
         <template v-else>
-            <transition-group name="tiles" tag="div" class="row" appear>
+            <transition-group name="tiles" tag="div" class="row">
                 <page-tile v-for="page in filteredPages" 
                            :key="page.id" 
                            :page="page"

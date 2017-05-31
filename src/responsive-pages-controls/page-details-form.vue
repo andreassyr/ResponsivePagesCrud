@@ -4,6 +4,13 @@
 
     }
 
+    .page-details-form input,
+    .page-details-form textarea,
+    .page-details-form select
+    {
+        border-color: #46c7c3;
+    }
+    
     .page-details-form .help-block
     {
         display: none;
@@ -17,59 +24,49 @@
 </style>
 <template>
     <div class="page-details-form">
-        <form class="form-horizontal" @submit.prevent="onSubmit">
+        <form class="" @submit.prevent="onSubmit">
             <div class="form-group" :class="{'has-error':errors.title}">
-                <label for="tile-input" class="col-sm-2 control-label">Title</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control"
-                           v-model="page.title"
-                           @blur="validateTitle"
-                           id="title-input" placeholder="Enter your page's title">
-                    <span class="help-block">Title cannot be empty and must be less than 50 characters</span>
-                </div>
+                <label for="tile-input" class="control-label">Title</label>
+                <input type="text" class="form-control"
+                       v-model="page.title"
+                       @blur="validateTitle"
+                       id="title-input" placeholder="Enter your page's title">
+                <span class="help-block">Title cannot be empty and must be less than 50 characters</span>
             </div>
             <div class="form-group" :class="{'has-error':errors.description}">
-                <label for="description-input" class="col-sm-2 control-label">Description</label>
-                <div class="col-sm-10">
-                    <textarea placeholder="Enter a description about your page" 
-                              v-model="page.description"
-                              @blur="validateDescription"
-                              class="form-control" id="description-input"></textarea>
-                    <span class="help-block">Description cannot be empty and must be less than 200 characters</span>
-                </div>
+                <label for="description-input" class="control-label">Description</label>
+                <textarea placeholder="Enter a description about your page" 
+                          v-model="page.description"
+                          @blur="validateDescription"
+                          class="form-control" id="description-input"></textarea>
+                <span class="help-block">Description cannot be empty and must be less than 200 characters</span>
             </div>
             <div class="form-group" :class="{'has-error':errors.type}">
-                <label for="type-input" class="col-sm-2 control-label">Page type</label>
-                <div class="col-sm-10">
-                    <select v-model.number="page.type" @blur="validateType"
-                            class="form-control" id="type-input">
-                        <option disabled selected value="-1">Please select a page type</option>
-                        <option value="0">Menu</option>
-                        <option value="1">Events</option>
-                        <option value="2">Content</option>
-                    </select>
-                    <span class="help-block">Please select a page type</span>
-                </div>
+                <label for="type-input" class="control-label">Page type</label>
+                <select v-model.number="page.type" @blur="validateType"
+                        class="form-control" id="type-input">
+                    <option disabled selected value="-1">Please select a page type</option>
+                    <option value="0">Menu</option>
+                    <option value="1">Events</option>
+                    <option value="2">Content</option>
+                </select>
+                <span class="help-block">Please select a page type</span>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">Publish on</label>
-                <div class="col-sm-10">
-                    <datetime-picker v-model="page.publishedOn" class="form-control"></datetime-picker>
-                </div>
+                <label class="control-label">Publish on</label>
+                <datetime-picker v-model="page.publishedOn" class="form-control"></datetime-picker>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                        <label>
-                            <input v-model="page.isActive" type="checkbox"> Make it visible to the users
-                        </label>
-                    </div>
+                <div class="checkbox">
+                    <label>
+                        <input v-model="page.isActive" type="checkbox"> Make it visible to the users
+                    </label>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10 text-right">
                     <button type="button" class="btn btn-default" @click="$emit('back')">Back</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-info">Submit</button>
                 </div>
             </div>
         </form>

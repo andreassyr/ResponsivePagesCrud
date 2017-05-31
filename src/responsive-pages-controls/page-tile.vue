@@ -1,7 +1,6 @@
 <style>
     .page-tile
     {
-        cursor: pointer;
         padding-top:15px;
         padding-bottom:15px;
 
@@ -9,17 +8,17 @@
 
     .page-tile .btn-link
     {
-        webkit-transition: all 0.5s ease;
-        -moz-transition: all 0.5s ease;
-        -ms-transition: all 0.5s ease;
-        -o-transition: all 0.5s ease;
-        transition: all 0.5s ease;	
+        webkit-transition: all 0.1s ease;
+        -moz-transition: all 0.1s ease;
+        -ms-transition: all 0.1s ease;
+        -o-transition: all 0.1s ease;
+        transition: all 0.1s ease;	
     }
 
     .page-tile .btn-link:hover
     {
         text-decoration: none;
-        font-weight: bold;
+        transform: scale(1.1, 1.1);
     }
 
     .page-tile .truncate
@@ -69,7 +68,37 @@
 
     .page-tile .wrapper .left-side
     {
-        background: #000;
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        text-align: center;
+        color:white;
+    }
+
+    .page-tile .left-side.menu
+    {
+        background-image: url('../assets/menu.jpg');
+    }
+
+    .page-tile .left-side.content
+    {
+        background-image: url('../assets/content.jpg');
+    }
+
+    .page-tile .left-side.event
+    {
+        background-image: url('../assets/event.jpg');
+    }
+
+    .page-tile .wrapper .left-side hr
+    {
+        width:100%;
+    }
+
+
+    .page-tile .wrapper .right-side
+    {
+        padding-left: 30px;
     }
 
     .page-tile .header
@@ -91,12 +120,17 @@
         border-right: 2px #ddd solid;
     }
 
+    .page-tile .row.footer .btn-link
+    {
+        font-weight: bold;
+    }
 </style>
 <template>
     <div class="page-tile col-xs-12 col-sm-6 col-md-4">
         <div class="col-xs-12 wrapper">
-            <div class="col-xs-3 left-side">
+            <div class="col-xs-3 left-side" :class="[pageClass]">
                 <page-type-label :type="page.type"></page-type-label>
+                <hr/>
                 <page-active-label :is-active="page.isActive"></page-active-label>
             </div>
             <div class="col-xs-9 right-side">
@@ -116,12 +150,12 @@
                 <hr/>
                 <div class="row footer text-center">
                     <div class="col-xs-6">
-                        <button class="btn btn-link" @click="deleteClicked">
+                        <button class="btn btn-block btn-link" @click="deleteClicked">
                             delete
                         </button>
                     </div>
                     <div class="col-xs-6">
-                        <router-link :to="{path:'edit-page/'+page.id}" tag="button" class="btn btn-link">
+                        <router-link :to="{path:'edit-page/'+page.id}" tag="button" class="btn btn-block btn-link">
                             edit
                     </router-link>
                 </div>
@@ -151,6 +185,23 @@
             }
         },
         computed: {
+            pageClass()
+            {
+                let text;
+                switch (this.page.type)
+                {
+                    case 0:
+                        text = 'menu';
+                        break;
+                    case 1:
+                        text = 'event';
+                        break;
+                    case 2:
+                        text = 'content';
+                        break;
+                }
+                return text;
+            },
             publishedOn() {
                 var publishDate = this.page.publishedOn.local().format('HH:mm DD-MM-YYYY');
                 return publishDate;

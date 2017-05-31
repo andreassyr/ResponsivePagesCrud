@@ -1,23 +1,27 @@
 <template>
-    <div class="page-edit-responsive-page container">
-        <h2>Edit page</h2>
-        <hr/>
-        <loader v-if="loading"></loader>
-        <template v-else>
-            <alert></alert>
-            <page-details-form :page="page" ref="form" @submit="submit" @back="onBack"></page-details-form>
-        </template>
-    </div>
+    <page-layout>
+        <div class="page-edit-responsive-page">
+            <h2>Edit page</h2>
+            <hr/>
+            <loader v-if="loading"></loader>
+            <template v-else>
+                <alert></alert>
+                <page-details-form :page="page" ref="form" @submit="submit" @back="onBack"></page-details-form>
+            </template>
+        </div>
+    </page-layout>
 </template>
 <script>
     import {mapActions, mapGetters} from 'vuex';
     import alert from '../commons/alert.vue';
     import loader from '../loader/loader.vue';
+    import PageLayout from './page-layout.vue';
     import PageDetailsForm from '../responsive-pages-controls/page-details-form.vue';
 
     export default{
         components: {
             'page-details-form': PageDetailsForm,
+            'page-layout': PageLayout,
             alert,
             loader
         },
@@ -31,7 +35,7 @@
             ...mapGetters(['getPageById', 'getPages'])
         },
         methods: {
-            ...mapActions(['getPage','updatePage']),
+            ...mapActions(['getPage', 'updatePage']),
             navigateToPagesList()
             {
                 this.$router.push({path: '/'})

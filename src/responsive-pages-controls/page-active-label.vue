@@ -1,5 +1,8 @@
 <template>
-    <span class="label" :class="[isActiveLabelClass]">{{isActiveLabelText}}</span>
+    <div class="page-type-label">
+        <span :class="[isActiveIconClass]"></span>
+        <div class="caption">{{isActiveLabelText}}</div>
+    </div>
 </template>
 <script>
     export default{
@@ -10,8 +13,8 @@
             }
         },
         computed: {
-            isActiveLabelClass() {
-                return this.isActive ? 'label-success' : 'label-default';
+            isActiveIconClass() {
+                return this.isActive ? 'glyphicon glyphicon-eye-open' : 'glyphicon glyphicon-eye-close';
             },
             isActiveLabelText()
             {

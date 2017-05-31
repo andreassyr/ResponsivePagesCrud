@@ -1,23 +1,27 @@
 <template>
-    <div class="page-create-responsive-page container">
-        <h2>Create new page</h2>
-        <hr/>
-        <loader v-if="loading"></loader>
-        <template v-else>
-            <alert></alert>
-            <page-details-form ref="form" @submit="submit" @back="onBack"></page-details-form>
-        </template>
-    </div>
+    <page-layout>
+        <div class="page-create-responsive-page">
+            <h2>Create new page</h2>
+            <hr/>
+            <loader v-if="loading"></loader>
+            <template v-else>
+                <alert></alert>
+                <page-details-form ref="form" @submit="submit" @back="onBack"></page-details-form>
+            </template>
+        </div>
+    </page-layout>
 </template>
 <script>
     import {mapActions} from 'vuex';
     import alert from '../commons/alert.vue';
     import loader from '../loader/loader.vue';
     import PageDetailsForm from '../responsive-pages-controls/page-details-form.vue';
-
+    import PageLayout from './page-layout.vue';
+    
     export default{
         components: {
             'page-details-form': PageDetailsForm,
+            'page-layout': PageLayout,
             alert,
             loader
         },
