@@ -4,9 +4,14 @@
         min-height: 100%;
     }
 
-    .pages-list .afix
+    .pages-list .tiles-move {
+        transition: all 1s;
+    }
+    
+    .pages-list .tiles-move-enter,
+    .pages-list .tiles-move-leave-to
     {
-        z-index: 9999;
+        opacity: 0;
     }
 
     .pages-list .search,
@@ -15,7 +20,7 @@
         margin-top: 20px;
         margin-bottom: 15px;
     }
-    
+
 </style>
 <template>
     <div class="pages-list">
@@ -50,12 +55,12 @@
             </div>
         </template>
         <template v-else>
-            <div class="row">
+            <transition-group name="tiles" tag="div" class="row" appear>
                 <page-tile v-for="page in filteredPages" 
                            :key="page.id" 
                            :page="page"
                            v-on:delete="showDeleteConfirmation"></page-tile>
-            </div>
+            </transition-group>
         </template>
         <page-delete-confirmation ref="deleteConfirmation"
                                   @success="onDeleteSuccess" 

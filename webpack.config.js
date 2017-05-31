@@ -47,7 +47,6 @@ module.exports = {
         historyApiFallback: true,
         publicPath: '/',
         noInfo: true,
-        host : '192.168.2.40',
         proxy: {
             "/api/**": {
                 target: "http://pagesmanagement.azurewebsites.net",

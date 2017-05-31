@@ -7,13 +7,6 @@
 
     }
 
-    .page-tile:hover .wrapper
-    {
-        -webkit-box-shadow: 0px 1px 30px 0px rgba(207,207,207,1);
-        -moz-box-shadow: 0px 1px 30px 0px rgba(207,207,207,1);
-        box-shadow: 0px 1px 30px 0px rgba(207,207,207,1);
-    }
-
     .page-tile .btn-link
     {
         webkit-transition: all 0.5s ease;
@@ -40,9 +33,11 @@
 
     .page-tile .wrapper
     {
+        display: flex;
+        flex-direction: row;
+
+        padding: 0;
         background: #fff;
-        position: relative;
-        padding:20px;
         -webkit-box-shadow: 0px 1px 10px 0px rgba(207,207,207,1);
         -moz-box-shadow: 0px 1px 10px 0px rgba(207,207,207,1);
         box-shadow: 0px 1px 10px 0px rgba(207,207,207,1);
@@ -52,6 +47,29 @@
         -ms-transition: all 0.5s ease;
         -o-transition: all 0.5s ease;
         transition: all 0.5s ease;	
+    }
+
+
+    .page-tile:hover .wrapper
+    {
+        -webkit-box-shadow: 0px 1px 30px 0px rgba(207,207,207,1);
+        -moz-box-shadow: 0px 1px 30px 0px rgba(207,207,207,1);
+        box-shadow: 0px 1px 30px 0px rgba(207,207,207,1);
+    }
+
+
+    .page-tile .wrapper .left-side,
+    .page-tile .wrapper .right-side
+    {
+        align-self:stretch;
+        padding-bottom: 15px;
+        padding-top: 15px;
+
+    }
+
+    .page-tile .wrapper .left-side
+    {
+        background: #000;
     }
 
     .page-tile .header
@@ -75,37 +93,38 @@
 
 </style>
 <template>
-    <div class="page-tile col-xs-12 col-sm-6 col-md-6">
-        <div class="wrapper">
-            <div class="header">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h4 class="truncate">{{page.title}}</h4>
-                    </div>
-                    <div class="col-xs-12">
-                        {{publishedOn}}
-                    </div>
-                    <div class="col-xs-12 labels">
-                        <page-type-label :type="page.type"></page-type-label>
-                        <page-active-label :is-active="page.isActive"></page-active-label>
-                    </div>
-
-                </div>
+    <div class="page-tile col-xs-12 col-sm-6 col-md-4">
+        <div class="col-xs-12 wrapper">
+            <div class="col-xs-3 left-side">
+                <page-type-label :type="page.type"></page-type-label>
+                <page-active-label :is-active="page.isActive"></page-active-label>
             </div>
-            <div class="content">
-                <p class="truncate">{{page.description}}</p>
-            </div>
-            <hr/>
-            <div class="row footer text-center">
-                <div class="col-xs-6">
-                    <button class="btn btn-link" @click="deleteClicked">
-                        delete
-                    </button>
+            <div class="col-xs-9 right-side">
+                <div class="header">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h4 class="truncate">{{page.title}}</h4>
+                        </div>
+                        <div class="col-xs-12">
+                            {{publishedOn}}
+                        </div>
+                    </div>
                 </div>
-                <div class="col-xs-6">
-                    <router-link :to="{path:'edit-page/'+page.id}" tag="button" class="btn btn-link">
-                        edit
-                </router-link>
+                <div class="content">
+                    <p class="truncate">{{page.description}}</p>
+                </div>
+                <hr/>
+                <div class="row footer text-center">
+                    <div class="col-xs-6">
+                        <button class="btn btn-link" @click="deleteClicked">
+                            delete
+                        </button>
+                    </div>
+                    <div class="col-xs-6">
+                        <router-link :to="{path:'edit-page/'+page.id}" tag="button" class="btn btn-link">
+                            edit
+                    </router-link>
+                </div>
             </div>
         </div>
     </div>
